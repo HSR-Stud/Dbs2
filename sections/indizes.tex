@@ -16,10 +16,21 @@
 
 \subsection{Clustered und Unclustered Indizes}
 
-\textbf{Clustered Index:} Blätter enthalten direkt die Data-Records in
-sortierter Reihenfolge. Werden oft für Primärschlüssel verwendet.
+\textbf{Clustered Index}
 
-\textbf{Unclustered Index:} Blätter enthalten Referenzen auf die Records.
+Blätter enthalten direkt die Data-Records in sortierter Reihenfolge. Die Daten
+liegen so physikalisch nahe beieinander, was den Zugriff beschleunigt. Pro
+Datenbanktabelle kann es dadurch aber nur einen Clustered Index geben.
+
+Wird oft für Primärschlüssel verwendet.
+
+\textbf{Unclustered Index}
+
+Blätter enthalten Referenzen auf die unsortierten Records. So sind pro Tabelle
+mehrere Unclustered Indizes möglich.
+
+Wird oft für non-PK-Spalten verwendet welche häufig in JOIN, WHERE oder ORDER BY
+Queries vorkommen.
 
 
 \subsection{B-Trees}
