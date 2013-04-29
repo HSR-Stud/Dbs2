@@ -1,3 +1,72 @@
 \section{Indizes}
 
-TODO.
+
+\subsection{Vergleich von Indizes}
+
+\begin{tabular}{*4{l|}}
+	\cline{2-4}
+	& \textbf{B-Tree} & \textbf{Bitmap} & \textbf{Hash Table} \\
+	\hline
+	\multicolumn{1}{|l|}{Wertebereich Spalten} & Gross & Klein & x \\
+	\multicolumn{1}{|l|}{Arten von Abfragen} & Range- und Equal-Search & x & Equal-Search \\
+	\multicolumn{1}{|l|}{Effizienz von Updates} & Gut & Schlecht & x \\
+	\hline
+\end{tabular}
+
+
+\subsection{Clustered und Unclustered Indizes}
+
+\textbf{Clustered Index:} Blätter enthalten direkt die Data-Records in
+sortierter Reihenfolge. Werden oft für Primärschlüssel verwendet.
+
+\textbf{Unclustered Index:} Blätter enthalten Referenzen auf die Records.
+
+
+\subsection{B-Trees}
+
+B-Bäume eignen sich -- im Gegensatz zu den konventionellen Binärbäumen -- gut
+für Sekundärspeicher. Die Stärken liegen bei Range- und Equal-Search-Queries.
+Das Laufzeitverhalten für Suche, sequentiellen Zugriff, Inserts und Deletes
+ist logarithmisch.
+
+Ein B-Baum mit Grad $k$ hat folgende Eigenschaften:
+
+\begin{enumerate}
+	\item Jeder Weg von der Wurzel zu einem Blatt hat die gleiche Länge.
+	\item Jeder Knoten ausser der Wurzel hat mindestens $k$ und höchstens $2k$
+		Einträge. Die Wurzel hat zwischen einem und $2k$ Einträgen. Die Einträge
+		werden in allen Knoten sortiert gehalten.
+	\item Alle Knoten mit $n$ Einträgen, ausser den Blättern, haben $n+1$ Kinder.
+	\item Seien $S_1, \ldots, S_n$ die Schlüssel eines Knotens mit $n+1$ Kindern.
+		$V_0, V_1, \ldots, V_n$ seien die Verweise auf diese Kinder. Dann gilt:
+		\begin{itemize}
+			\item $V_0$ weist auf den Teilbaum mit Schlüsseln kleiner als $S_1$.
+			\item $V_1$ ($i=1, \ldots, n-1$) weist auf den Teilbaum, dessen Schlüssel
+				zwischen $S_i$ und $S_i+1$ liegen.
+			\item $V_n$ weist auf den Teilbaum mit Schlüsseln grösser als $S_n$.
+			\item In den Blattknoten sind die Zeiger nicht definiert.
+		\end{itemize}
+\end{enumerate}
+
+
+\subsection{Bitmap}
+
+Ein Bitmap-Index ordnet Attributwerte als Bitmuster.
+
+Gut geeignet für Attribute mit wenigen diskreten Werten, d.h. Wertebereiche mit
+geringer Kardinalität (ca. 1\% der Datenmenge).
+
+Anfragen (v.a. AND/OR) sind schnell, Modifikationen sehr langsam. Dadurch sind
+Bitmap Indizes gut für Datawarehouses geeignet, wo der Zugriff nur read-only
+erfolgt.
+
+
+\subsection{Hash}
+
+Gut geeignet für für Equal-Search (zB Equi-Joins) und Multipoint Queries.
+
+Schlecht geeignet für Range-, Prefix- oder Extremal-Queries.
+
+NULL-Werte sind nicht zugelassen.
+
+Probleme: Hash overflows. Diese können mit Overflow Chains verhindert werden.
