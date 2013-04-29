@@ -1,0 +1,72 @@
+% Strict mode
+
+\RequirePackage[l2tabu, orthodox]{nag} % Warn when using deprecated constructs
+
+% Document class and packages
+
+\documentclass[10pt,a4paper,parskip,fleqn]{scrartcl}
+\linespread{1.05} % Palatino needs more leading space
+\usepackage[a4paper,vmargin={30mm},hmargin={30mm}]{geometry} % Page margins
+\usepackage[ngerman]{babel} % New German hyphenation (multilingual support)
+\usepackage[utf8x]{inputenc} % Unicode support
+\usepackage{amsmath} % AMS math package
+\usepackage{amsfonts} % AMS fonts
+\usepackage{amssymb} % AMS symbols
+\usepackage{fixmath} % ISO conform greek letters
+\usepackage{graphicx} % Graphics support
+\usepackage{float} % Use H placement specifier for floats
+\usepackage{longtable} % Tables across several pages
+\usepackage{hyperref} % Hyperlinks
+\usepackage{fancyhdr} % Fancy headers
+\usepackage{textgreek} % Greek letters in textmode
+\usepackage{calc} % Width calculations
+
+% Font configuration
+
+\usepackage[sc]{mathpazo} % Use palatino font
+\usepackage[T1]{fontenc} % Use correct font encoding
+\usepackage[babel=true]{microtype} % Micro-typographic optimizations
+\addtokomafont{disposition}{\rmfamily} % Set palatino as heading font
+
+% TikZ / PGF
+
+\usepackage{pgf} % Backend for TikZ
+\usepackage{tikz} % TikZ vector graphics
+\usetikzlibrary{arrows,automata}
+
+% Configure table spacing
+
+\renewcommand{\arraystretch}{1.2}
+
+% Page break before each section
+
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+% Additional math operators
+
+\DeclareMathOperator{\lb}{lb} % Binary logarithm
+
+% Creative Commons icons
+
+\graphicspath{{texutils/ccicons/}}
+\input{texutils/ccicons.tex}
+
+% License macro
+
+\gdef\ccLogos{\ccLogo\;\ccShareAlike}
+\newcommand{\license}[1]{\renewcommand{\ccLogos}{#1}}
+
+% Settings and macros for titlepage
+
+\input{texutils/authorsfromfile.tex} % Load authors from CONTRIBUTORS.txt
+\input{revision.tex} % Show last git change date
+
+\newcommand{\moduleName}[1]{\gdef\modname{#1}}
+\newcommand{\moduleAbbr}[1]{\gdef\modabbr{#1}}
+\gdef\modurl{https://github.com/HSR-Stud/\modabbr/}
+
+\title{\modabbr\ Zusammenfassung}
+\subject{\modname}
+\authorsfromfile{CONTRIBUTORS.txt}{\url{\modurl}}
+\date{Stand: \revisiondate}
